@@ -25,8 +25,10 @@ class ChooseYourOwnFormatPlugin extends Gdn_Plugin {
 
 	public function Gdn_Form_BeforeBodyBox_Handler($Sender) {
 		$FormatRadioList = $Sender->RadioList('Format', array('Html' => 'HTML', 'Markdown' => 'Markdown'));
-		// Add our radio field and get rid of the hidden input field.
-		$Sender->EventArguments['BodyBox'] = $FormatRadioList.preg_replace("/<input type=\"hidden\" id=\"Form_Format\".*>/", "", $Sender->EventArguments['BodyBox']);
+		// Add our radio field
+		$Sender->EventArguments['BodyBox'] .= $FormatRadioList;
+		// This gets rid of the hidden Format field
+		$Sender->SetValue('Format', NULL);
 	}
 
 	private function GetDefault($Sender) {
